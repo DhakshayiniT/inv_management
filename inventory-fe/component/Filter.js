@@ -11,6 +11,7 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import axios from "axios";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
@@ -59,6 +60,17 @@ const Filter = (props) => {
         });
       };
     
+    const handleApplyFilter = ()=>{
+       var data = {
+            "supplier":checkedSupplier
+        }
+        axios
+    .post(
+        `http://localhost:8000/api/filter_products`,data)
+    .then((response) => {
+    props.setRows(response.data)
+    });
+    }  
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -90,7 +102,7 @@ const Filter = (props) => {
                     sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
                     subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
-                          <Button sx={{color:"#000",width:"150px",textTransform:"none",border:"1px solid",marginRight:"24px"}}>Apply</Button>
+                          <Button onClick={()=>handleApplyFilter()}  sx={{color:"#000",width:"150px",textTransform:"none",border:"1px solid",marginRight:"24px"}}>Apply</Button>
                         </ListSubheader>
                     }
                 >
@@ -121,7 +133,7 @@ const Filter = (props) => {
                             )}
                         </List>
                     </Collapse>
-                    <ListItemButton onClick={() => handleListClick("price")}>
+                    {/* <ListItemButton onClick={() => handleListClick("price")}>
                         <ListItemIcon>
                             <LocalOfferIcon />
                         </ListItemIcon>
@@ -141,7 +153,7 @@ const Filter = (props) => {
                                 />
                             </ListItemButton>
                         </List>
-                    </Collapse>
+                    </Collapse> */}
                 </List>
 
             </Menu>

@@ -6,7 +6,7 @@ from django.http import HttpResponse
 import json
 from django.http import JsonResponse
 from django.db.models import Q
-from bson import Decimal128 
+
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Supplier
 from inventory_admin.forms import ProductForm,SupplierForm
@@ -143,26 +143,25 @@ def generateCSV(request):
     return response
 
 
-# @api_view(['POST'])
-# def filter_products(request):
-#     suppliers = request.POST.getlist('supplier[]') 
-#     # min_price = request.GET.get('minPrice')
-#     # max_price = request.GET.get('maxPrice')
+@api_view(['POST'])
+def filter_products(request):
+    data = json.loads(request.body)
+    suppliers = data.get('supplier')
+    min_price = data.get('min_price')
+    max_price = data.get('max_price')
+   
 
-#     products = Product.objects.all()
+    products = Product.objects.all()
 
-#     if suppliers:
-#         supplier_filter = Q()
-#         for supplier in suppliers:
-#             supplier_filter |= Q(supplier__icontains=supplier)
-#         products = products.filter(supplier_filter)
+    if suppliers and len(suppliers)!=0:
+        products= products.filter(supplier__in=suppliers)
     
-#     # if min_price:
-#     #     products = products.filter(price__gte=min_price)
+    # if min_price:
+    #     products = products.filter(price__gte=min_price)
     
-#     # if max_price:
-#     #     products = products.filter(price__lte=max_price)
+    # if max_price:
+    #     products = products.filter(price__lte=max_price)
 
-#     data = [{'name': product.name, 'description': product.description, 'quantity_in_stock': product.quantity_in_stock,'supplier':product.supplier} for product in products]
-#     return JsonResponse(data, safe=False)
+    supplier_form = ProductForm(products, context={'request': request}, many=True)
 
+    return Response(supplier_form.data)
