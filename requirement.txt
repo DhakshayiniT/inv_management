@@ -1,1 +1,7 @@
 django
+pymongo==3.12.1
+dnspython
+djongo
+pytz
+djangorestframework
+django-cors-headers

@@ -1,9 +1,11 @@
 
 from django.contrib import admin
-from django.urls import path
-from inventory_admin.admin import inv_site
+from django.urls import path,include
+
 
 urlpatterns = [
-    path('inv/', inv_site.urls),
+    path('',include('inventory_admin.urls')),
+    # path('inv/', inv_site.urls),
+    # path('',views.index,name='index')
 ]
 
