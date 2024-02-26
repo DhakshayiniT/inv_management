@@ -17,5 +17,5 @@ urlpatterns = [
     re_path(r'^api/supplier/delete/([0-9]+)$', views.supplier_delete),
     re_path(r'^api/supplier/detail/([0-9]+)$', views.supplier_detail),
     re_path(r'^api/generatecsv', views.generateCSV),
-    re_path(r'^api/filter_products',views.filter_products)
+    # re_path(r'^api/filter_products',views.filter_products)
 ]
