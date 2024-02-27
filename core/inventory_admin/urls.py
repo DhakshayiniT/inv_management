@@ -1,11 +1,9 @@
 
 from django.contrib import admin
 from django.urls import path, re_path
-from inventory_admin.admin import inv_site
 from . import views
 
 urlpatterns = [
-    path('inv/', inv_site.urls),
     re_path(r'^api/product/list', views.product_list),
     re_path(r'^api/product/create', views.product_create),
     re_path(r'^api/product/update/([0-9]+)$', views.product_update),

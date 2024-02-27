@@ -5,3 +5,4 @@ djongo
 pytz
 djangorestframework
 django-cors-headers
+djangorestframework-simplejwt
