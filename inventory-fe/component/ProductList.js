@@ -192,7 +192,7 @@ const router=useRouter()
         <>
         <Button onClick={props.handleDownload} sx={{color:"#000",width:"150px",textTransform:"none",border:"1px solid",marginRight:"24px"}}>Download</Button>
         <Button onClick={()=>router.push("addProduct")} sx={{color:"#000",width:"150px",textTransform:"none",border:"1px solid"}}>Add Product</Button>
-            <Filter rows={props.rows} setRows={props.setRows}/>
+            <Filter rows={props.rows} setRows={props.setRows} duprows={props.duprows}/>
       </>)}
     </Toolbar>
   );
@@ -209,6 +209,7 @@ export default function ProductList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows,setRows] = React.useState([])
+  const [duprows,setDuprows] = React.useState([])
   const router = useRouter()
 
 
@@ -219,6 +220,7 @@ export default function ProductList() {
     )
     .then((response) => {
     setRows([...response.data])
+    setDuprows([...response.data])
     })
   },[])
 
@@ -262,6 +264,7 @@ export default function ProductList() {
     .then((response) => {
         var temp = rows.filter(i => i.id !== pk)
         setRows([...temp])
+        setDuprows([...temp])
     
     });
   };
@@ -325,7 +328,7 @@ export default function ProductList() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2,backgroundColor:"rgb(139 139 139)" }}>
-        <EnhancedTableToolbar numSelected={selected.length} handleDownload={handleDownload} rows={rows} setRows={setRows}/>
+        <EnhancedTableToolbar numSelected={selected.length} handleDownload={handleDownload} rows={rows} setRows={setRows} duprows={duprows}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}

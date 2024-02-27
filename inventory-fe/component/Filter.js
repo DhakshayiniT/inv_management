@@ -30,14 +30,14 @@ const Filter = (props) => {
     })
 
     useEffect(()=>{
-        if(props?.rows?.length!=0){
-        var arr =findMinMax("price",props.rows)
+        if(props?.duprows?.length!=0){
+        var arr =findMinMax("price",props.duprows)
         setPrice(arr)
         setMinMax([arr.min,arr.max])
-        var sup = props.rows.map(item => item.supplier);
+        var sup = props.duprows.map(item => item.supplier);
         setSupplier([...new Set(sup)])
         }
-    },[props.rows])
+    },[props.duprows])
 
     const findMinMax =(key,arr)=>{
         const datas = arr.map((node)=> node[key])
